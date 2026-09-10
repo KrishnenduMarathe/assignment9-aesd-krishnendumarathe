@@ -7,7 +7,7 @@ on:
             - '*'
 jobs:
     full-test:
-        container: custom-aesd:assignment9-buildroot
+        container: cuaesd/aesd-autotest:assignment9-buildroot
         runs-on: self-hosted
         timeout-minutes: 120
         steps:
@@ -15,6 +15,11 @@ jobs:
 
           - name: Checkout submodules
             run: git submodule update --init --recursive
+
+          - name: Install Dependencies
+            run: |
+              apt update
+              apt install -y nodejs openssh-client sshpass sed make binutils build-essential diffutils gcc g++ bash patch gzip bzip2 perl tar cpio unzip rsync file bc findutils wget qemu-system-arm qemu-efi-aarch64 cloud-image-utils netcat valgrind
 
           - uses: webfactory/ssh-agent@v0.5.3
             with:
